@@ -70,6 +70,7 @@ class Matrix:
         for i in range(self.num_rows):
             for j in range(self.num_cols):
                    R.elements[j][i] = self.elements[i][j]
+        return R
 
     def is_equal(self, M):
         if self.num_rows != M.num_rows or self.num_cols != M.num_cols:

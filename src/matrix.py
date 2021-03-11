@@ -32,7 +32,11 @@ class Matrix:
         return Matrix(M)
 
     def copy(self):
-        return  Matrix(self.elements)
+        M = self.new_zero_matrix(self.num_rows, self.num_cols)
+        for i in range(self.num_rows):
+            for j in range(self.num_cols):
+                M.elements[i][j] = self.elements[i][j]
+        return  M
 
     def add(self, M):
         if self.num_rows == M.num_rows and self.num_cols == M.num_cols:
@@ -80,12 +84,34 @@ class Matrix:
                    if round(self.elements[i][j], 3) != round(M.elements[i][j], 3):
                        return False
         return True
-        
+
+    def get_pivot_row(self, column_index):
+        for i in range(self.num_rows):
+            bool_left_zeros = True
+            for j in range(column_index):
+                if self.elements[i][j] != 0:
+                    bool_left_zeros = False
+            if bool_left_zeros and self.elements[i][column_index] != 0:
+                return i
+        return None
+
+    def swap_rows(self, row_index1,row_index2):
+        ret_M = self.copy()
+        temp = ret_M.elements[row_index1]
+        ret_M.elements[row_index1] = ret_M.elements[row_index2]
+        ret_M.elements[row_index2] = temp
+        return ret_M
 
 
-
-
-        
-
-
-
+    def normalize_row(self, row_index):
+        ret_M = self.copy()
+        row = ret_M.elements[row_index]
+        scale_factor, elt_index = 0, 0
+        while scale_factor == 0 and elt_index < len(row):
+            scale_factor = row[elt_index]
+            elt_index += 1
+        if scale_factor != 0:
+            for elt_index in range(len(row)):
+                row[elt_index] /= scale_factor
+        ret_M.elements[row_index] = row
+        return ret_M

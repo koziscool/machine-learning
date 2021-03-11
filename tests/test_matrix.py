@@ -75,6 +75,22 @@ def Matrix_transpose_test(M, reference_matrix_elements):
     else:
         return False
 
+def Matrix_pivot_row_test(M, column_index, pivot_row):
+    print('Testing method get_pivot_row...')
+    if M.get_pivot_row(column_index) == pivot_row:
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_swap_rows_test(M, row_index1, row_index2, reference_matrix_elements):
+    print('Testing method swap_rows...')
+    if M.swap_rows(row_index1, row_index2).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -131,3 +147,25 @@ assert(Matrix_elements_test(B, ref_elts))
 print()
 assert(Matrix_inequality_test(C, ref_elts))
 print()
+
+print("Testing row reduction on the following matrix")
+print( """
+[[0, 1, 2],
+ [3, 6, 9],
+ [2, 6, 8]]
+""")
+
+
+A = Matrix([[0, 1, 2],
+ [3, 6, 9],
+ [2, 6, 8]])
+
+assert(Matrix_pivot_row_test(A, 0, 1))
+print()
+
+assert(Matrix_swap_rows_test(A, 0, 1, [[3, 6, 9], [0, 1, 2], [2, 6, 8]] ))
+print()
+
+A = A.swap_rows(0,1)
+A = A.normalize_row(0)
+print(A.elements)

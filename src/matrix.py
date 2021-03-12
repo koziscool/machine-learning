@@ -115,3 +115,42 @@ class Matrix:
                 row[elt_index] /= scale_factor
         ret_M.elements[row_index] = row
         return ret_M
+
+    def clear_below(self, row_index):
+        ret_M = self.copy()
+        row = ret_M.row(row_index)
+        key_index, i  = -1, 0
+
+        while key_index == -1 and i < len(row):
+            if row[i] != 0:
+                key_index = i
+                break
+            i += 1
+     
+        if key_index != -1:
+            for i in range(row_index + 1, len(ret_M.elements)):
+                multiplier = ret_M.elements[i][key_index] / row[key_index]
+                for j in range(len(ret_M.elements[i])):
+                    ret_M.elements[i][j] -= multiplier * row[j]
+
+        return ret_M
+
+    def clear_above(self, row_index):
+        ret_M = self.copy()
+        row = ret_M.row(row_index)
+        key_index, i  = -1, 0
+
+        while key_index == -1 and i < len(row):
+            if row[i] != 0:
+                key_index = i
+                break
+            i += 1
+        
+        if key_index != -1:
+            for i in range(row_index):
+                multiplier = ret_M.elements[i][key_index] / row[key_index]
+                for j in range(len(ret_M.elements[i])):
+                    ret_M.elements[i][j] -= multiplier * row[j]
+        
+        return ret_M
+

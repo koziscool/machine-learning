@@ -91,6 +91,14 @@ def Matrix_swap_rows_test(M, row_index1, row_index2, reference_matrix_elements):
     else:
         return False
 
+def Matrix_normalize_row_test(M, row_index, reference_matrix_elements):
+    print('Testing method normalize_row...')
+    if M.normalize_row(row_index).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -167,5 +175,15 @@ assert(Matrix_swap_rows_test(A, 0, 1, [[3, 6, 9], [0, 1, 2], [2, 6, 8]] ))
 print()
 
 A = A.swap_rows(0,1)
+assert(Matrix_normalize_row_test(A, 0, [[1.0, 2.0, 3.0], [0, 1, 2], [2, 6, 8]] ))
 A = A.normalize_row(0)
-print(A.elements)
+
+M = [[1, 2, 3],
+ [0, 1, 2],
+ [2, 6, 8]]
+print(Matrix(M).clear_below(0).elements)
+
+M =[[1, 2, 3],
+ [0, 1, 2],
+ [0, 2, 2]]
+print(Matrix(M).clear_below(1).elements)

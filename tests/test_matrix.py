@@ -76,7 +76,7 @@ def Matrix_transpose_test(M, reference_matrix_elements):
         return False
 
 def Matrix_pivot_row_test(M, column_index, pivot_row):
-    print('Testing method get_pivot_row...')
+    print('Testing method get_pivot_row('+ str(column_index) +')...')
     if M.get_pivot_row(column_index) == pivot_row:
         print('PASSED')
         return True
@@ -84,7 +84,7 @@ def Matrix_pivot_row_test(M, column_index, pivot_row):
         return False
 
 def Matrix_swap_rows_test(M, row_index1, row_index2, reference_matrix_elements):
-    print('Testing method swap_rows...')
+    print('Testing method swap_rows(' + str(row_index1) + ', ' + str(row_index2) + ')...')
     if M.swap_rows(row_index1, row_index2).is_equal(Matrix(reference_matrix_elements)):
         print('PASSED')
         return True
@@ -92,8 +92,24 @@ def Matrix_swap_rows_test(M, row_index1, row_index2, reference_matrix_elements):
         return False
 
 def Matrix_normalize_row_test(M, row_index, reference_matrix_elements):
-    print('Testing method normalize_row...')
+    print('Testing method normalize_row('+ str(row_index) +')...')
     if M.normalize_row(row_index).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_clear_below_test(M, row_index, reference_matrix_elements):
+    print('Testing method clear_below('+ str(row_index) +')...')
+    if M.clear_below(row_index).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_clear_above_test(M, row_index, reference_matrix_elements):
+    print('Testing method clear_above('+ str(row_index) +')...')
+    if M.clear_above(row_index).is_equal(Matrix(reference_matrix_elements)):
         print('PASSED')
         return True
     else:
@@ -163,7 +179,6 @@ print( """
  [2, 6, 8]]
 """)
 
-
 A = Matrix([[0, 1, 2],
  [3, 6, 9],
  [2, 6, 8]])
@@ -173,17 +188,38 @@ print()
 
 assert(Matrix_swap_rows_test(A, 0, 1, [[3, 6, 9], [0, 1, 2], [2, 6, 8]] ))
 print()
-
 A = A.swap_rows(0,1)
+
 assert(Matrix_normalize_row_test(A, 0, [[1.0, 2.0, 3.0], [0, 1, 2], [2, 6, 8]] ))
 A = A.normalize_row(0)
+print()
 
-M = [[1, 2, 3],
- [0, 1, 2],
- [2, 6, 8]]
-print(Matrix(M).clear_below(0).elements)
+assert(Matrix_clear_below_test(A, 0, [[1, 2, 3], [0, 1, 2], [0, 2, 2]] ))
+A = A.clear_below(0)
+print()
 
-M =[[1, 2, 3],
- [0, 1, 2],
- [0, 2, 2]]
-print(Matrix(M).clear_below(1).elements)
+assert(Matrix_pivot_row_test(A, 1, 1))
+print()
+
+assert(Matrix_normalize_row_test(A, 1, [[1, 2, 3], [0, 1, 2], [0, 2, 2]] ))
+A = A.normalize_row(1)
+print()
+
+assert(Matrix_clear_below_test(A, 1, [[1, 2, 3], [0, 1, 2], [0, 0, -2]] ))
+A = A.clear_below(1)
+print()
+
+assert(Matrix_pivot_row_test(A, 2, 2))
+print()
+
+assert(Matrix_normalize_row_test(A, 2, [[1, 2, 3], [0, 1, 2], [0, 0, 1]] ))
+A = A.normalize_row(2)
+print()
+
+assert(Matrix_clear_above_test(A, 2, [[1, 2, 0], [0, 1, 0], [0, 0, 1]] ))
+A = A.clear_above(2)
+print()
+
+assert(Matrix_clear_above_test(A, 1, [[1, 0, 0], [0, 1, 0], [0, 0, 1]] ))
+A = A.clear_above(1)
+print()

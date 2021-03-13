@@ -32,11 +32,8 @@ class Matrix:
         return Matrix(M)
 
     def copy(self):
-        M = self.new_zero_matrix(self.num_rows, self.num_cols)
-        for i in range(self.num_rows):
-            for j in range(self.num_cols):
-                M.elements[i][j] = self.elements[i][j]
-        return  M
+        copied_elements = [[entry for entry in row] for row in self.elements]
+        return Matrix(copied_elements)
 
     def add(self, M):
         if self.num_rows == M.num_rows and self.num_cols == M.num_cols:

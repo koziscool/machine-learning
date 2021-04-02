@@ -151,3 +151,20 @@ class Matrix:
         
         return ret_M
 
+    def rref(self):
+        ret_M = self.copy()
+        row_index = 0
+        for column_index in range(ret_M.num_cols):
+            pivot_index = ret_M.get_pivot_row(column_index)
+            if not pivot_index == None:
+                if not pivot_index == row_index:
+                    ret_M = ret_M.swap_rows(row_index, pivot_index)
+                ret_M = ret_M.normalize_row(row_index)
+                ret_M = ret_M.clear_above(row_index)
+                ret_M = ret_M.clear_below(row_index)
+                row_index += 1
+        return ret_M
+        
+
+
+

@@ -115,6 +115,14 @@ def Matrix_clear_above_test(M, row_index, reference_matrix_elements):
     else:
         return False
 
+def Matrix_rref_test(M, reference_matrix_elements):
+    print('Testing method rref...')
+    if M.rref().is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -222,4 +230,24 @@ print()
 
 assert(Matrix_clear_above_test(A, 1, [[1, 0, 0], [0, 1, 0], [0, 0, 1]] ))
 A = A.clear_above(1)
+print()
+
+A = Matrix([[0, 1, 2],
+                [3, 6, 9],
+                [2, 6, 8]])
+
+A_rref = [[1, 0, 0],
+[0, 1, 0],
+[0, 0, 1]]
+assert(Matrix_rref_test(A, A_rref))
+print()
+
+B = Matrix([[0, 0, -4, 0],
+                [0, 0, 0.3, 0],
+                [0, 2, 1, 0]])
+
+B_rref = [[0, 1, 0, 0],
+[0, 0, 1, 0],
+[0, 0, 0, 0]]
+assert(Matrix_rref_test(B, B_rref))
 print()

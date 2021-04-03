@@ -158,6 +158,19 @@ def Matrix_inverse_test(M, reference_matrix_elements, error_string):
         return True
     return False
 
+def Matrix_determinant_test(M, reference_determinant, error_string):
+    print('Testing method determinant...')
+    determinant_return_value = M.determinant()
+    if isinstance(determinant_return_value, str):
+        if determinant_return_value == error_string:
+            print('PASSED')
+            return True
+    else:
+        if round(determinant_return_value, 6) == round(reference_determinant, 6):
+            print('PASSED')
+            return True
+    return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -356,4 +369,44 @@ A = Matrix([[1, 2, 3],
                 [3, 2, 1],
                 [1, 1, 1]])
 assert(Matrix_inverse_test(A, [], "non-singular"))
+print()
+
+A = Matrix([[1,2], 
+                           [3,4]])
+assert(Matrix_determinant_test(A, -2, ""))
+print()
+
+A = Matrix([[1,2,0.5],
+                           [3,4,-1],
+                           [8,7,-2]])
+assert(Matrix_determinant_test(A, -10.5, ""))
+print()
+
+A = Matrix([[1,2,0.5,0,1,0],
+                           [3,4,-1,1,0,1],
+                           [8,7,-2,1,1,1],
+                           [-1,1,0,1,0,1],
+                           [0,0.35,0,-5,1,1],
+                           [1,1,1,1,1,0]])
+assert(Matrix_determinant_test(A, -37.3, ""))
+print()
+
+A = Matrix([[1,2,0.5,0,1,0],
+                           [3,4,-1,1,0,1],
+                           [8,7,-2,1,1,1],
+                           [-1,1,0,1,0,1],
+                           [0,0.35,0,-5,1,1],
+                           [1,1,1,1,1,0],
+                           [2,3,1.5,1,2,0]])
+assert(Matrix_determinant_test(A, -1, "non-square"))
+print()
+
+A = Matrix([[1,2,0.5,0,1,0,1],
+                           [3,4,-1,1,0,1,0],
+                           [8,7,-2,1,1,1,0],
+                           [-1,1,0,1,0,1,0],
+                           [0,0.35,0,-5,1,1,0],
+                           [1,1,1,1,1,0,0],
+                           [2,3,1.5,1,2,0,1]])
+assert(Matrix_determinant_test(A, 0, ""))
 print()

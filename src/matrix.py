@@ -99,7 +99,6 @@ class Matrix:
         ret_M.elements[row_index2] = temp
         return ret_M
 
-
     def normalize_row(self, row_index):
         ret_M = self.copy()
         row = ret_M.elements[row_index]
@@ -214,6 +213,44 @@ class Matrix:
         else:
             print('Error: cannot invert a singular matrix')
             return "non-singular"
+
+    def determinant(self):
+        def normalize(M, row_index):
+            M_copy = M.copy()
+            row = M_copy.elements[row_index]
+            scale_factor, elt_index = 0, 0
+            while scale_factor == 0 and elt_index < len(row):
+                scale_factor = row[elt_index]
+                elt_index += 1
+            if scale_factor != 0:
+                for elt_index in range(len(row)):
+                    row[elt_index] /= scale_factor
+            M_copy.elements[row_index] = row
+            return M_copy, abs(scale_factor)
+
+        if self.num_rows != self.num_cols:
+            print('Error: cannot take determinant of a non-square matrix')
+            return "non-square"
+
+        M = self.copy()
+        row_index, scale_product, num_swaps = 0, 1, 0
+        for column_index in range(M.num_cols):
+            scale_factor = 0
+            pivot_index = M.get_pivot_row(column_index)
+            if not pivot_index == None:
+                if not pivot_index == row_index:
+                    M = M.swap_rows(row_index, pivot_index)
+                    num_swaps += 1
+                M, scale_factor = normalize(M, row_index)
+                M = M.clear_above(row_index)
+                M = M.clear_below(row_index)
+                row_index += 1
+                scale_product *= scale_factor
+
+        if M.is_equal(identity_matrix(M.num_cols)):
+            return (-1 ** num_swaps) * scale_product
+        else:
+            return 0
 
 def identity_matrix(n):
     I_elts =  [[ 1 if j == i else 0 for j in range(n)] for i in range(n) ]

@@ -179,8 +179,6 @@ class Matrix:
             ret_M.append(temp_arr)
         return Matrix(ret_M)
 
-        
-
     def get_rows(self, row_nums):
         ret_M = []
         for i in range(self.num_rows):
@@ -191,7 +189,6 @@ class Matrix:
                 ret_M.append(temp_arr)
         return Matrix(ret_M)
 
-
     def get_columns(self, col_nums):
         ret_M = []
         for i in range(self.num_rows):
@@ -201,3 +198,24 @@ class Matrix:
                         temp_arr.append(self.elements[i][j])
                 ret_M.append(temp_arr)
         return Matrix(ret_M)
+
+    def inverse(self):
+        if self.num_rows != self.num_cols:
+            print("Error: cannot invert a non-square matrix")
+            return "non-square"
+
+        I = identity_matrix(self.num_rows)
+        M = self.copy().augment(I)
+        RREF = M.rref()
+        identity_range, inverse_range = [*range(self.num_cols)], [*range(self.num_cols, 2*self.num_cols)]            
+        I_test = RREF.get_columns(identity_range)
+        if I.is_equal(I_test):
+            return RREF.get_columns(inverse_range)
+        else:
+            print('Error: cannot invert a singular matrix')
+            return "non-singular"
+
+def identity_matrix(n):
+    I_elts =  [[ 1 if j == i else 0 for j in range(n)] for i in range(n) ]
+    return Matrix(I_elts)
+

@@ -147,6 +147,17 @@ def Matrix_get_columns_test(M, col_nums, reference_matrix_elements):
     else:
         return False
 
+def Matrix_inverse_test(M, reference_matrix_elements, error_string):
+    print('Testing method inverse...')
+    inverse_result = M.inverse()
+    if isinstance(inverse_result, Matrix) and inverse_result.is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    if isinstance(inverse_result, str) and inverse_result == error_string:
+        print('PASSED')
+        return True
+    return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -317,4 +328,32 @@ result = [
     [17, 18]
 ]
 assert(Matrix_get_columns_test(A_augmented, [4, 5], result))
+print()
+
+A = Matrix([[1, 2],
+                [3, 4]])
+result = [[-2,   1],
+ [1.5, -0.5]]
+assert(Matrix_inverse_test(A, result, ""))
+print()
+
+A = Matrix([[1,   2,  3],
+                [1,   0, -1],
+                [0.5, 0,  0]])
+result = [[0,   0,    2],
+ [0.5, 1.5, -4],
+ [0,  -1,    2]]
+assert(Matrix_inverse_test(A, result, ""))
+print()
+
+A = Matrix([[1, 2, 3, 0],
+                [1, 0, 1, 0],
+                [0, 1, 0, 0]])
+assert(Matrix_inverse_test(A, [], "non-square"))
+print()
+
+A = Matrix([[1, 2, 3],
+                [3, 2, 1],
+                [1, 1, 1]])
+assert(Matrix_inverse_test(A, [], "non-singular"))
 print()

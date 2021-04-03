@@ -123,6 +123,30 @@ def Matrix_rref_test(M, reference_matrix_elements):
     else:
         return False
 
+def Matrix_augment_test(M, N, reference_matrix_elements):
+    print('Testing method augment...')
+    if M.augment(N).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_get_rows_test(M, row_nums, reference_matrix_elements):
+    print('Testing method get_rows...')
+    if M.get_rows(row_nums).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_get_columns_test(M, col_nums, reference_matrix_elements):
+    print('Testing method get_columns...')
+    if M.get_columns(col_nums).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -250,4 +274,47 @@ B_rref = [[0, 1, 0, 0],
 [0, 0, 1, 0],
 [0, 0, 0, 0]]
 assert(Matrix_rref_test(B, B_rref))
+print()
+
+A = Matrix([
+    [1, 2,   3,  4],
+    [5, 6,   7,  8],
+    [9, 10, 11, 12]
+])
+B = Matrix([
+    [13, 14],
+    [15, 16],
+    [17, 18]
+])
+
+A_augmented = A.augment(B)
+result = [
+    [1, 2,   3,  4, 13, 14],
+    [5, 6,   7,  8, 15, 16],
+    [9, 10, 11, 12, 17, 18]
+]
+assert(Matrix_augment_test(A, B, result))
+print()
+
+result = [
+    [1, 2,   3,  4, 13, 14],
+    [9, 10, 11, 12, 17, 18]
+]
+assert(Matrix_get_rows_test(A_augmented, [0,2], result))
+print()
+
+result = [
+    [1, 2,   3,  4],
+    [5, 6,   7,  8],
+    [9, 10, 11, 12]
+]
+assert(Matrix_get_columns_test(A_augmented, [0,1, 2, 3], result))
+print()
+
+result = [
+    [13, 14],
+    [15, 16],
+    [17, 18]
+]
+assert(Matrix_get_columns_test(A_augmented, [4, 5], result))
 print()

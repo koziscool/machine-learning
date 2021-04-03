@@ -164,7 +164,40 @@ class Matrix:
                 ret_M = ret_M.clear_below(row_index)
                 row_index += 1
         return ret_M
+
+    def augment(self, B):
+        if self.num_rows != B.num_rows:
+            return None
+
+        ret_M = []
+        for i in range(self.num_rows):
+            temp_arr = []
+            for j in range(self.num_cols):
+                temp_arr.append(self.elements[i][j])
+            for j in range(B.num_cols):
+                temp_arr.append(B.elements[i][j])
+            ret_M.append(temp_arr)
+        return Matrix(ret_M)
+
         
 
+    def get_rows(self, row_nums):
+        ret_M = []
+        for i in range(self.num_rows):
+            if i in row_nums:
+                temp_arr = []
+                for j in range(self.num_cols):
+                    temp_arr.append(self.elements[i][j])
+                ret_M.append(temp_arr)
+        return Matrix(ret_M)
 
 
+    def get_columns(self, col_nums):
+        ret_M = []
+        for i in range(self.num_rows):
+                temp_arr = []
+                for j in range(self.num_cols):
+                    if j in col_nums:
+                        temp_arr.append(self.elements[i][j])
+                ret_M.append(temp_arr)
+        return Matrix(ret_M)

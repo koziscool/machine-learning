@@ -11,6 +11,14 @@ def Matrix_elements_test(M, reference_matrix_elements):
     else:
         return False
 
+def Matrix_equality_test(M, reference_matrix_elements):
+    print('Testing matrix equality...')
+    if M.is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
 def Matrix_inequality_test(M, reference_matrix_elements):
     print('Testing matrix inequality...')
     if not M.is_equal(Matrix(reference_matrix_elements)):
@@ -442,4 +450,63 @@ result = [[3, 3, 0],
  [6, -3, 0],
  [0, 0, 27]]
 assert(Matrix_power_operator_test(A, 3, result))
+print()
+
+A = Matrix(
+    [[1,0,2,0,3],
+    [0,4,0,5,0],
+    [6,0,7,0,8],
+    [-1,-2,-3,-4,-5]]
+    )
+
+A_t = A.transpose()
+result = [[ 1,  0,  6, -1],
+ [ 0,  4,  0, -2],
+ [ 2,  0,  7, -3],
+ [ 0,  5,  0, -4],
+ [ 3,  0,  8, -5]]
+assert(Matrix_transpose_test(A, result))
+print()
+
+B = A_t @ A
+# B.elements
+result = [[38,  2, 47,  4, 56],
+ [ 2, 20,  6, 28, 10],
+ [47,  6, 62, 12, 77],
+ [ 4, 28, 12, 41, 20],
+ [56, 10, 77, 20, 98]]
+assert(Matrix_multiply_test(A_t, A, result))
+print()
+
+C = B * 0.1
+result = [[3.8,  .2, 4.7,  .4, 5.6],
+ [ .2, 2.0,  .6, 2.8, 1.0],
+ [4.7,  .6, 6.2, 1.2, 7.7],
+ [ .4, 2.8, 1.2, 4.1, 2.0],
+ [5.6, 1.0, 7.7, 2.0, 9.8]]
+assert(Matrix_scalar_multiply_test(B, 0.1, result))
+print()
+
+D = B - C
+result = [[34.2,  1.8, 42.3,  3.6, 50.4],
+ [ 1.8, 18. ,  5.4, 25.2,  9. ],
+ [42.3,  5.4, 55.8, 10.8, 69.3],
+ [ 3.6, 25.2, 10.8, 36.9, 18. ],
+ [50.4,  9. , 69.3, 18. , 88.2]]
+assert(Matrix_subtract_test(B, C, result))
+print()
+
+E = D + C
+result =  [[38,  2, 47,  4, 56],
+ [ 2, 20,  6, 28, 10],
+ [47,  6, 62, 12, 77],
+ [ 4, 28, 12, 41, 20],
+ [56, 10, 77, 20, 98]]
+assert(Matrix_add_test(D, C, result))
+print()
+
+assert(Matrix_equality_test(E, B.elements))
+print()
+
+assert(Matrix_inequality_test(E, C.elements))
 print()

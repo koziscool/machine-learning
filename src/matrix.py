@@ -226,7 +226,7 @@ class Matrix:
                 for elt_index in range(len(row)):
                     row[elt_index] /= scale_factor
             M_copy.elements[row_index] = row
-            return M_copy, abs(scale_factor)
+            return M_copy, scale_factor
 
         if self.num_rows != self.num_cols:
             print('Error: cannot take determinant of a non-square matrix')
@@ -237,7 +237,7 @@ class Matrix:
         for column_index in range(M.num_cols):
             scale_factor = 0
             pivot_index = M.get_pivot_row(column_index)
-            if not pivot_index == None:
+            if not (pivot_index == None):
                 if not pivot_index == row_index:
                     M = M.swap_rows(row_index, pivot_index)
                     num_swaps += 1
@@ -248,7 +248,7 @@ class Matrix:
                 scale_product *= scale_factor
 
         if M.is_equal(identity_matrix(M.num_cols)):
-            return (-1 ** num_swaps) * scale_product
+            return ((-1) ** num_swaps) * scale_product
         else:
             return 0
 

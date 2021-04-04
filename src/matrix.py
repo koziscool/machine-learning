@@ -252,6 +252,15 @@ class Matrix:
         else:
             return 0
 
+    def __rmul__(self, a):
+       return self.scalar_multiply(a)
+
+    def __pow__(self, exponent):
+        ret_M = self.copy()
+        for _ in range(1, exponent):
+            ret_M = ret_M.matrix_multiply(self)
+        return ret_M
+
 def identity_matrix(n):
     I_elts =  [[ 1 if j == i else 0 for j in range(n)] for i in range(n) ]
     return Matrix(I_elts)

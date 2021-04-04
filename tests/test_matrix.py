@@ -171,6 +171,23 @@ def Matrix_determinant_test(M, reference_determinant, error_string):
             return True
     return False
 
+def Matrix_scalar_multiply_operator_test(M, a, reference_matrix_elements):
+    print('Testing scalar multiply operator...')
+    if (a*M).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+def Matrix_power_operator_test(M, exponent, reference_matrix_elements):
+    print('Testing power operator...')
+    if (M**exponent).is_equal(Matrix(reference_matrix_elements)):
+        print('PASSED')
+        return True
+    else:
+        return False
+
+
 A = Matrix([[1,0,2,0,3],
                 [0,4,0,5,0],
                 [6,0,7,0,8],
@@ -409,4 +426,20 @@ A = Matrix([[1,2,0.5,0,1,0,1],
                            [1,1,1,1,1,0,0],
                            [2,3,1.5,1,2,0,1]])
 assert(Matrix_determinant_test(A, 0, ""))
+print()
+
+A = Matrix([[1, 1, 0],
+                [2, -1, 0],
+                [0, 0, 3]])
+
+result = [[0.1, 0.1, 0],
+[0.2, -0.1, 0],
+[0, 0, 0.3]]
+assert(Matrix_scalar_multiply_operator_test(A, 0.1, result))
+print()
+
+result = [[3, 3, 0],
+ [6, -3, 0],
+ [0, 0, 27]]
+assert(Matrix_power_operator_test(A, 3, result))
 print()

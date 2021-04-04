@@ -252,6 +252,30 @@ class Matrix:
         else:
             return 0
 
+    def cofactor_method_determinant(self):
+        def get_minor(M, strike_row, strike_col):
+            ret_M = []
+            for i in range(M.num_rows):
+                if i != strike_row:
+                    temp_arr = []
+                    for j in range(M.num_cols):
+                        if j != strike_col:
+                            temp_arr.append(M.elements[i][j])
+                    ret_M.append(temp_arr)
+            return Matrix(ret_M)
+
+        if self.num_rows != self.num_cols:
+            print('Error: cannot take determinant of a non-square matrix')
+            return "non-square"
+        
+        if self.num_rows == 1:
+            return self.elements[0][0]
+
+        ret_val, row = 0, 0
+        for col in range(self.num_cols):
+            ret_val += ((-1) ** (row+col)) * self.elements[row][col] * get_minor(self, row, col).cofactor_method_determinant()
+        return ret_val
+    
     def __add__(self, M):
        return self.add(M) 
 

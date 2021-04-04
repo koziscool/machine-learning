@@ -399,12 +399,16 @@ print()
 A = Matrix([[1,2], 
                            [3,4]])
 assert(Matrix_determinant_test(A, -2, ""))
+result = A.cofactor_method_determinant()
+assert(Matrix_determinant_test(A, result, ""))
 print()
 
 A = Matrix([[1,2,0.5],
                            [3,4,-1],
                            [8,7,-2]])
 assert(Matrix_determinant_test(A, -10.5, ""))
+result = A.cofactor_method_determinant()
+assert(Matrix_determinant_test(A, result, ""))
 print()
 
 A = Matrix([[1,2,0.5,0,1,0],
@@ -414,6 +418,8 @@ A = Matrix([[1,2,0.5,0,1,0],
                            [0,0.35,0,-5,1,1],
                            [1,1,1,1,1,0]])
 assert(Matrix_determinant_test(A, -37.3, ""))
+result = A.cofactor_method_determinant()
+assert(Matrix_determinant_test(A, result, ""))
 print()
 
 A = Matrix([[1,2,0.5,0,1,0],
@@ -469,7 +475,6 @@ assert(Matrix_transpose_test(A, result))
 print()
 
 B = A_t @ A
-# B.elements
 result = [[38,  2, 47,  4, 56],
  [ 2, 20,  6, 28, 10],
  [47,  6, 62, 12, 77],

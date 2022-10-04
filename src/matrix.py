@@ -9,7 +9,7 @@ def dot_product(u,v):
 
 class Matrix:
     def __init__(self, elements):
-        self.elements = elements
+        self.elements = elements.copy()
         self.num_rows = len(elements)
         self.num_cols = len(elements[0])
 
